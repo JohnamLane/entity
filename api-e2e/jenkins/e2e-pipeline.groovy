@@ -451,12 +451,12 @@ node {
                     echo "Temporary DB create results: "+ output_set_postals.actions[0].out
 
                     // increment the invoice sequence in pay db (needed for invoice creation to be successful)
-                    int increment_value = (BUILD_NUMBER.toInteger() - SEQUENCE_MODIFIER.toInteger()) * INVOICE_CREATIONS_PER_RUN.toInteger()
+                    int increment_value = (openshift.build.number - SEQUENCE_MODIFIER.toInteger()) * INVOICE_CREATIONS_PER_RUN.toInteger()
                     echo """
-                        BUILD_NUMBER = ${BUILD_NUMBER} \
+                        BUILD_NUMBER = ${openshift.build.number} \
                         SEQUENCE_MODIFIER = ${SEQUENCE_MODIFIER} \
                         INVOICE_CREATIONS_PER_RUN = ${INVOICE_CREATIONS_PER_RUN} \
-                        Incrementing invoice id sequence by (${BUILD_NUMBER} - ${SEQUENCE_MODIFIER}) * ${INVOICE_CREATIONS_PER_RUN} = ${increment_value}
+                        Incrementing invoice id sequence by (${openshift.build.number} - ${SEQUENCE_MODIFIER}) * ${INVOICE_CREATIONS_PER_RUN} = ${increment_value}
                     """
                     def output_alter_sequence = openshift.exec(
                         PG_POD.objects()[latest].metadata.name,
