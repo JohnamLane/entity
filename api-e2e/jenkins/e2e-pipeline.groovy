@@ -404,6 +404,10 @@ node {
         verify_new_deployments(NAMESPACE, TAG_NAME, COMPONENT_TAG, OLD_VERSIONS, components)
     }
 
+    stage('Sleep to make sure that the COLIN API is ready') {
+        sleep 5000
+    }
+    
     stage('Load Data') {
         script {
             openshift.withCluster() {
@@ -450,10 +454,6 @@ node {
                 }
             }
         }
-    }
-
-    stage('Sleep to make sure that the COLIN API is ready') {
-        sleep 5000
     }
 
     stage('Run Postman E2E Tests') {
