@@ -452,6 +452,10 @@ node {
         }
     }
 
+    stage('Sleep to make sure that the COLIN API is ready') {
+        sleep 5000
+    }
+
     stage('Run Postman E2E Tests') {
         script {
             openshift.withCluster() {
