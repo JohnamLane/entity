@@ -405,9 +405,9 @@ node {
     }
 
     stage('Sleep to make sure that the COLIN API is ready') {
-        sleep 5000
+        sleep 300
     }
-    
+
     stage('Load Data') {
         script {
             openshift.withCluster() {
