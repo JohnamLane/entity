@@ -62,10 +62,6 @@ def PASSED = true
 
 def ROCKETCHAT_CHANNEL='#registries-bot'
 
-// sequence modifiers for invoice creation
-def SEQUENCE_MODIFIER = 10
-def INVOICE_CREATIONS_PER_RUN = 8
-
 // define groovy functions
 import groovy.json.JsonOutput
 
@@ -450,25 +446,7 @@ node {
                     )
                     echo "Temporary DB create results: "+ output_set_postals.actions[0].out
 
-                    // increment the invoice sequence in pay db (needed for invoice creation to be successful)
-                    int increment_value = 300 + ( BUILD_NUMBER * INVOICE_CREATIONS_PER_RUN.toInteger() )
-                    echo """
-                        BUILD_NUMBER = ${openshift.build.number} \
-                        SEQUENCE_MODIFIER = ${SEQUENCE_MODIFIER} \
-                        INVOICE_CREATIONS_PER_RUN = ${INVOICE_CREATIONS_PER_RUN} \
-                        Incrementing invoice id sequence by (${openshift.build.number} - ${SEQUENCE_MODIFIER}) * ${INVOICE_CREATIONS_PER_RUN} = ${increment_value}
-                    """
-                    def output_alter_sequence = openshift.exec(
-                        PG_POD.objects()[latest].metadata.name,
-                        '--',
-                        "bash -c '\
-                            psql -d \"${PAY_DB_NAME}\" -c \" \
-                                ALTER SEQUENCE invoice_id_seq START WITH ${increment_value}; \
-                                ALTER SEQUENCE invoice_id_seq RESTART; \
-                            \" \
-                        '"
-                    )
-                    echo "Temporary DB increment sequence results: "+ output_alter_sequence.actions[0].out
+
                 }
             }
         }
