@@ -190,6 +190,8 @@ node {
                     }
 
                     def pg_deploy = openshift.selector('dc', "${POSTGRESQL}-${COMPONENT_TAG}")
+                    //sleeping to confirm whether pre-hook includes the lastARFiled column
+                    sleep 300
 
                     for (api_name in DEPLOYMENTS_API_WITH_PG) {
                         def api_deploy = openshift.selector("dc", "${api_name}-${COMPONENT_TAG}")
@@ -404,9 +406,6 @@ node {
         verify_new_deployments(NAMESPACE, TAG_NAME, COMPONENT_TAG, OLD_VERSIONS, components)
     }
 
-    stage('Sleep to make sure that the COLIN API is ready') {
-        sleep 300
-    }
 
     stage('Load Data') {
         script {
