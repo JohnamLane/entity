@@ -190,8 +190,6 @@ node {
                     }
 
                     def pg_deploy = openshift.selector('dc', "${POSTGRESQL}-${COMPONENT_TAG}")
-                    //sleeping to confirm whether pre-hook includes the lastARFiled column
-                    sleep 300
 
                     for (api_name in DEPLOYMENTS_API_WITH_PG) {
                         def api_deploy = openshift.selector("dc", "${api_name}-${COMPONENT_TAG}")
