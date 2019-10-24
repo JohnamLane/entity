@@ -387,12 +387,12 @@ node {
 
                         colin_deploy.scale('--replicas=0')
 
-                        openshift.withProject('gl2uos-tools') {
-                            // start + wait for ora-pipline to finish
-                            echo "Resetting ${ORACLE}-${COMPONENT_TAG}"
-                            def ora = openshift.selector('bc', 'oradb-startup-pipeline')
-                            ora.startBuild('--wait=true', "-e=namespace=${NAMESPACE}", "-e=component=${ORACLE}", "-e=tag=${TAG_NAME}", "-e=component_tag=${COMPONENT_TAG}").logs('-f')
-                        }
+                        // openshift.withProject('gl2uos-tools') {
+                        //     // start + wait for ora-pipline to finish
+                        //     echo "Resetting ${ORACLE}-${COMPONENT_TAG}"
+                        //     def ora = openshift.selector('bc', 'oradb-startup-pipeline')
+                        //     ora.startBuild('--wait=true', "-e=namespace=${NAMESPACE}", "-e=component=${ORACLE}", "-e=tag=${TAG_NAME}", "-e=component_tag=${COMPONENT_TAG}").logs('-f')
+                        // }
 
                         echo "Rolling out ${colin_name}-${COMPONENT_TAG}"
                         colin_deploy.rollout().latest()
