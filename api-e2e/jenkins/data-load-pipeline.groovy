@@ -56,10 +56,7 @@ import groovy.json.JsonOutput
 node {
     stage("Connect to API pods and drop/re-create tables") {
         script {
-            echo """
-            Pipeline called with constants:
-                - DEPLOYMENTS: ${DEPLOYMENTS}
-            """
+
             openshift.withCluster() {
                 openshift.withProject("${NAMESPACE}-${TAG_NAME}") {
 
