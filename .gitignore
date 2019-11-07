@@ -100,6 +100,10 @@ e2e/tests_output
 # mypy
 .mypy_cache/
 
+# nightwatch
+e2e/tests_output/
+e2e/*.log
+
 # vuepress
 /**/.temp
 
