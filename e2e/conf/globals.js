@@ -2,8 +2,11 @@ module.exports = {
 	waitForConditionTimeout : 30000,
 	retryAssertionTimeout: 30000,		
 	throwOnMultipleElementsReturned : true,
+	persist_globals : true,
 
 	launch_url: "https://coops-e2e.pathfinder.gov.bc.ca",
+
+	identifier: '',
 
 	CP0000977: {
 		identifier: "CP0000977",
